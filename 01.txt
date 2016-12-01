@@ -34,5 +34,3 @@ Although it hasn't changed, you can still get your puzzle input.
 Answer: 159
 
 That's the right answer! You are one gold star closer to fixing the sleigh. You got rank 757 on this star's leaderboard.
-
-You have completed Day 1! You can [Shareon Twitter Google+ Reddit] this victory or [Return to Your Advent Calendar].
