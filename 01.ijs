@@ -22,7 +22,6 @@ rmv =: #~ -.@(+./@((LF,CR,',')&(=/)))
   end.
   echo +/|+. curpos
   echo task2
-
 )
 
 exit 0
