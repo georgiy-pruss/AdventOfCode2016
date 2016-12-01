@@ -13,9 +13,8 @@ rmv =: #~ -.@(+./@((LF,CR,',')&(=/)))
     len =. ".}. >e
     if. task2<0 do.
       for_p. curpos + curdir * 1+i.len do.
-        if. p e. visited do. task2 =. +/|+.p break.
-        else. visited =. visited, p
-        end.
+        if. p e. visited do. task2 =. +/|+.p break. end.
+        visited =. visited, p
       end.
     end.
     curpos =. curpos + len * curdir
@@ -23,5 +22,6 @@ rmv =: #~ -.@(+./@((LF,CR,',')&(=/)))
   echo +/|+. curpos
   echo task2
 )
+
 
 exit 0
