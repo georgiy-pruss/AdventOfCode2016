@@ -1,1 +1,1 @@
-print(sum(abs(e)for e in __import__('functools').reduce(lambda s,e:(s[0]+(0,1,0,-1)[(s[2]+(3,1)[e[0]=='R'])%4]*int(e[1:]),s[1]+(1,0,-1,0)[(s[2]+(3,1)[e[0]=='R'])%4]*int(e[1:]),(s[2]+(3,1)[e[0]=='R'])%4),open("01.dat","rt").read().strip().replace(',','').split(),(0,0,0))[0:2]))
+print(sum(abs(e)for e in __import__('functools').reduce(lambda s,e,z=lambda x,y:(x[2]+(3,1)[y[0]=='R'])%4:(s[0]+(0,1,0,-1)[z(s,e)]*int(e[1:]),s[1]+(1,0,-1,0)[z(s,e)]*int(e[1:]),z(s,e)),open("01.dat","rt").read().strip().replace(',','').split(),(0,0,0))[0:2]))
