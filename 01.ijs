@@ -9,7 +9,7 @@ rmv =: #~ -.@(+./@((LF,CR,',')&(=/)))
   task2=._1      NB. will be >=0 when done
   visited=.0$0j0 NB. for task2
   for_e. split0 y do.
-    curdir =. curdir * ((0j1 0j_1){~'R'={. >e)
+    curdir =. curdir * 0j1 0j_1{~'R'={. >e
     len =. ".}. >e
     if. task2<0 do.
       for_p. curpos + curdir * 1+i.len do.
