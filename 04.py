@@ -23,10 +23,11 @@ nsum = 0
 for r in t:
   c = [0]*26 # counter for letters
   n = 0 # id
-  j = 0 # begin of it = end of name
+  j = 0 # begin of id = end of name
   s = 0 # checksum
   for i,e in enumerate(r):
-    if 'a'<=e<='z': c[ord(e)-ord('a')] += 1
+    if 'a'<=e<='z':
+      c[ord(e)-ord('a')] += 1
     elif '0'<=e<='9':
       if j==0: j = i
       n = 10*n + ord(e)-ord('0')
@@ -40,7 +41,9 @@ for r in t:
     c[k] = -1
   if a==cs:
     nsum += n
-  if 'northpole object storage' in shift( r[0:j-1], n ):
+  rs = shift( r[0:j-1], n )
+  if 'north' in rs or 'pole' in rs:  # actually it's 'northpole object storage'
     t2 = n
+
 print( nsum )
 print( t2 )
