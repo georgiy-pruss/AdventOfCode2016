@@ -6,4 +6,5 @@ n =: [:".3{._10{.]                      NB. extract number (id)
 s =: 4 :'((26|x+])&.(_97+a.i.]))"0 y'   NB. shift cypher, n s 'str'
 p =. +./@('north' E. n s ])             NB. if decrypted string contains 'north'
 echo +/(n*v)&> t                        NB. sum of ids of good strings
-echo +/(n*p)&> t                        NB. sum of ids of stringw with 'north'
+echo +/(n*p)&> t                        NB. sum of ids of strings with 'north'
+exit 0                                  NB. ^^^ we assume such string is only one
