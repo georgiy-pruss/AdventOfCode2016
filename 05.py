@@ -11,39 +11,29 @@ assert '1' == md5(b'abc3231929')[5]
 assert '8' == md5(b'abc5017308')[5]
 assert 'f' == md5(b'abc5278568')[5]
 
-def f(s): # part 1
-  i = 0
-  o = ''
-  while True:
-    m = md5( s+b'%d'%i )
-    if m[:5] == '00000':
-      o += m[5]
-      if len(o)==8: break
-    i += 1
-  # print(i)
-  return o
-
-def g(s): # part 2
-  i = 0
+def f(s):
   B = '_' # blank char
-  o = 8*B
+  o1 = ''
+  o2 = 8*B
   d = 0   # digits done
+  i = 0
   while True:
     m = md5( s+b'%d'%i )
     if m[:5] == '00000':
+      if len(o1)<8: o1 += m[5]
       if '0'<=m[5]<='7':
         p = int(m[5])
-        if o[p] == B:
-          o = o[:p]+m[6]+o[p+1:]
+        if o2[p] == B:
+          o2 = o2[:p]+m[6]+o2[p+1:] # print( i ); print( o2 )
           d += 1
-          # print( i )
-          # print( o )
           if d==8: break
     i += 1
-  return o
+  return o1,o2
 
-# assert f( b'abc' ) == '18f47a30' # 9.7 s, 8605828 iterations
-# assert g( b'abc' ) == '05ace8e3' # 15.6 s, 13753421 iterations
+# o1,o2 = f( b'abc' )
+# assert o1 == '18f47a30' # 9.7 s, 8605828 iterations
+# assert o2 == '05ace8e3' # 15.6 s, 13753421 iterations
 
-print( f( t ) ) # 1a3099aa, 19 s, 16734551 iterations
-print( g( t ) ) # 694190cd, 30 s, 26326685 iterations
+o1,o2 = f(t)
+print( o1 ) # 1a3099aa, 19 s, 16734551 iterations
+print( o2 ) # 694190cd, 30 s, 26326685 iterations
