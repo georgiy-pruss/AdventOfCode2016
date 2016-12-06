@@ -12,9 +12,9 @@ md5 =: 3 : 0
 NB. https://en.wikipedia.org/wiki/MD5
 assert '9e107d9d372bb6826bd81d3542a419d6' -: md5 'The quick brown fox jumps over the lazy dog'
 
-assert '1' -: 5{ md5 'abc3231929'
-assert '8' -: 5{ md5 'abc5017308'
-assert 'f' -: 5{ md5 'abc5278568'
+assert '000001' -: 6{. md5 'abc3231929'
+assert '000008' -: 6{. md5 'abc5017308'
+assert '00000f' -: 6{. md5 'abc5278568'
 
 f =: 3 : 0 NB. both parts
   i =. 0
