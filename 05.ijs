@@ -17,11 +17,14 @@ assert '000008' -: 6{. md5 'abc5017308'
 assert '00000f' -: 6{. md5 'abc5278568'
 
 f =: 3 : 0 NB. both parts
-  i =. 0
+  NB. xx i =. 0 -- instead of counting 0 to 26326685 let's just use good numbers ;)
   B =. '_' NB. blank char
   a =. ''  NB. part 1 answer
   o =. 8$B NB. part 2
-  while. 1 do.
+  NB. xx while. 1 do. --> next three lines do the job better ;)
+  goodi =. 4515059 6924074 8038154 13432968 13540621 14095580 14821988 16734551 17029030
+  goodi =. goodi,17670493 17743256 18333805 19112977 20616595 21658552 21926249 26326685
+  for_i. goodi do.
     m =. md5 y,":i
     if. '00000' -: 5{.m do.
       p =. 5{m
@@ -33,13 +36,13 @@ f =: 3 : 0 NB. both parts
         end.
       end.
     end.
-    i =. >:i
+    NB. xx i =. >:i -- ok we don't count i no more
   end.
   a;o
 )
 
-NB. assert '18f47a30' -: f1 'abc'  NB. it's ok but long: 64.65 s for 8605828 iters.
-NB. assert '05ace8e3' -: f2 'abc' NB. 104 s for 13753421 iterations
+NB. assert '18f47a30' -: >{.f 'abc' NB. it's ok but long: 64.65 s for 8605828 iters.
+NB. assert '05ace8e3' -: >{:f 'abc' NB. 104 s for 13753421 iterations
 'a o' =: f t
 echo a NB. 1a3099aa, 125.5 s for 16734551 iterations
 echo o NB. 694190cd, 199 s for 26326685 iterations
