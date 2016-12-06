@@ -7,4 +7,6 @@ s =: 4 :'((26|x+])&.(_97+a.i.]))"0 y'   NB. shift cypher, n s 'str'
 p =. +./@('north' E. n s ])             NB. if decrypted string contains 'north'
 echo +/(n*v)&> t                        NB. sum of ids of good strings
 echo (p&> # n&>) t  NB. was +/(n*p)&> t NB. we assume only one string w/'north'
+NB. m=.>_63&{.@((63$'-')&,)&.> t
+NB. echo (p"1 # n"1) m                  NB. can be too. not better
 exit 0
