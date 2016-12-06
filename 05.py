@@ -7,9 +7,9 @@ def md5(s): return hashlib.md5(s).hexdigest()
 # https://en.wikipedia.org/wiki/MD5
 assert '9e107d9d372bb6826bd81d3542a419d6' == md5(b'The quick brown fox jumps over the lazy dog')
 
-assert '1' == md5(b'abc3231929')[5]
-assert '8' == md5(b'abc5017308')[5]
-assert 'f' == md5(b'abc5278568')[5]
+assert '000001' == md5(b'abc3231929')[:6]
+assert '000008' == md5(b'abc5017308')[:6]
+assert '00000f' == md5(b'abc5278568')[:6]
 
 def f(s):
   B = '_' # blank char
