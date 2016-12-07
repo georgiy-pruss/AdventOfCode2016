@@ -1,24 +1,6 @@
 t =: cutLF CR-.~fread '07.dat'
 
-0 : 0 NB. variants
-1.
-  hasabba =: 3 : 0
-    a =. (#~ 0&<) , I. 1 0 0 1 E."1 s=. = ':',y
-    b =. (#~ 0&<) , I. 0 1 1 0 E."1 s
-    +./+./a=/b
-  ))
-  spl =: ']'&(<;._2@,~)
-  div =: '['&(<;._2@,~)
-  valid =: 1 0 -: [: hasabba@;"1 [: |: [: ,&';'&.> [: div@> spl
-2.
-  hasabba =: +./@(+./@(I.@(1&|.= 2&|.)=/I.@(=3&|.)))
-  v =: 0 1 1 -: (0 0 1 { ]) = 1 3 2 { ]
-  hasabba =: [: +./ 4 v\ ] NB. or below:
-3.
-  hasabba =: [:+./4(0 1 1-:(0 0 1&{=1 3 2&{)@])\]
-)
-
-hasabba =: [:+./4(0 1 1-:(0 0 1{])=1 3 2{])\]
+hasabba =: [:+./4(0 1 1-:(0 0 1{])=1 3 2{])\] NB. string has pattern 'abba'
 
 spl =: (<;.2@,)&']' NB. split into parts with ']'
 div =: (<;.2@,)&'[' NB. divide into '....[' and '....]'(,'[')
@@ -28,12 +10,16 @@ v1 =: 1 0-:(hasabba@;"1)@arr NB. row 0 has 'abba', row 1 has not
 
 echo +/ v1&> t
 
-isaba =: ((0{])~:1{])*.(0{])=2{] NB. string is 'aba'
-isaba =: 0 1-:(0 0{])=1 2{]
+isaba =: 0 1-:(0 0{])=1 2{] NB. string is of pattern 'aba'
 
+NB. get all 'aba' strings from row 0 and check it they are in join of row 1
 v2 =: 3 : '+./ ((+./@ E.)&(;1{arr y))&> (1 0 1&{)&.> (#~isaba&>) 3<\ ;0{ arr y'
+        NB.                           [: 1 0 1&{&.>[:(#~isaba&>) 3<\[:;0{arr
+
 echo +/ v2&> t
 
-echo >1{t
-echo arr >1{t
+aba =: 3 : '(1 0 1&{)&.> (#~isaba&>) 3<\ ;0{ arr y'
+    NB.   [: 1 0 1&{&.> [: (#~ isaba&>) 3 <\ [: ; 0 { arr
+v3 =: 3 : '+./ ((+./@ E.)&(;1{arr y))&> aba y'
+
 NB. exit 0
