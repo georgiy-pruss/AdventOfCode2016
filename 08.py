@@ -1,23 +1,20 @@
 t = open('08.dat','rt').read().strip().split('\n')
 
-r,c = 6,50
-m = r * [c*['.']]
+m = 6*[50*[0]]
 
 for s in t:
-  if s.startswith('rect'):
-    x = int( s[s.find(' ')+1:s.find('x')] )
-    y = int( s[s.find('x')+1:] )
-    for i in range(y): m[i] = ['#']*x + m[i][x:]
-  elif s.startswith('rotate row y='):
-    y = int( s[s.find('=')+1:s.find('by')-1] )
-    x = int( s[s.find('by')+2:] )
+  a = s.replace('=',' ').replace('x',' ').split()
+  if a[0]=='rect': # ['rect', '...', '...']
+    x = int( a[1] ); y = int( a[2] )
+    for i in range(y): m[i] = [1]*x + m[i][x:]
+  elif a[1]=='row': # ['rotate', 'row', 'y', '...', 'by', '...']
+    y = int( a[3] ); x = int( a[5] )
     m[y] = m[y][-x:]+m[y][:-x]
-  elif s.startswith('rotate column x='):
-    x = int( s[s.find('=')+1:s.find('by')-1] )
-    y = int( s[s.find('by')+2:] )
+  elif a[1]=='column': # ['rotate', 'column', '...', 'by', '...']
+    x = int( a[2] ); y = int( a[4] )
     w = [list(o) for o in zip(*m)]
     w[x] = w[x][-y:]+w[x][:-y]
     m = [list(o) for o in zip(*w)]
 
-print( sum(sum(e=='#' for e in m[i]) for i in range(r)) )
-for l in m: print( ''.join(e for e in l) )
+print( sum(sum(w) for w in m) )
+for l in m: print( ''.join(' \u2588'[e] for e in l) )
