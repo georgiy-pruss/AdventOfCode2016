@@ -5,7 +5,7 @@ t =: t rplc 'rotate ';'';'row y=';'r';'column x=';'c';'by ';'';'rect ';'i';'x';'
   for_s. y do. select. c=.{.s [ 'j k'=.".}.s=.>s
     case.'i' do. m=.X(<(i.k);i.j)}m
     case.'r' do. m=.((-k)|.j{m)j}m
-    case.'c' do. m=.|:((-k)|.j{w)j}w=.|:m end.
+    case.'c' do. m=.|:((-k)|.j{w)j}w=.|:m end. NB. last case can be even w/o 'c'
     NB. no c}"1m :(   ((-k)|.j{"1 m)(<(i.#m);j)}m NB. change just column, w/o |:
   end.
   echo +/,m        NB. 121
