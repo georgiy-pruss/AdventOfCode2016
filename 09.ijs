@@ -1,6 +1,6 @@
 t =: (fread'09.dat')-.CRLF
 v =: 4 : 0
-  b =. y i.'(' if. b=#y do. #y return. end.
+  b =. y i.'(' if. b=#y do. b return. end.
   's r' =. ".&> 'x' cut (e =. {.t i.')') {. t =. (>:b) }. y
   if. x=1 do. d =. s else. d =. 2 v s{. (>:e) }. t end.
   b + (r*d) + x v (e+1+s) }. t
