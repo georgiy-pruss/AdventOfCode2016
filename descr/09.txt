@@ -18,6 +18,7 @@ For example:
 What is the decompressed length of the file (your puzzle input)? Don't count whitespace.
 
 Your puzzle answer was 150914.
+
 --- Part Two ---
 
 Apparently, the file actually uses version two of the format.
