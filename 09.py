@@ -1,33 +1,17 @@
 t = open('09.dat','rt').read().strip()
 
-p = 0
-o = 0
-while True:
-  b = t.find( '(', p )
-  if b<0: o += len(t[p:]); break
-  e = t.find( ')', b+1 )
-  if e<0: o += len(t[p:]); break
-  o += b-p
-  r,n = map(int,t[b+1:e].split('x'))
-  o += r*n
-  p = e+1+r
-print(o)
+def v( t, k ):
+  p = 0 # current position in string
+  o = 0
+  while True:
+    b = t.find( '(', p )
+    if b<0: o += len(t)-p; return o
+    e = t.index( ')', b+1 ) # fail if not found
+    o += b-p
+    r,n = map(int,t[b+1:e].split('x'))
+    if k==1: o += r*n # part 1
+    else: o += v( t[e+1:e+1+r]*n, 2 ) # part 2
+    p = e+1+r # could be recursion on t[e+1+r:] but we'd better loop
 
-import time
-o = 0 # output length
-##k = 0 # counter, just for showing progress
-##m = len(t) # min len of text, just for showing
-##started = time.time()
-while True:
-  b = t.find( '(' )
-  if b<0: o += len(t); break
-  e = t.find( ')', b+1 )
-  if e<0: o += len(t); break
-  o += b
-  r,n = map(int,t[b+1:e].split('x'))
-  t = t[e+1:e+1+r]*n + t[e+1+r:]
-  ##if len(t)<m: m=len(t)
-  ##k += 1
-  ##if k%1000000==0: print(k//1000000,'t',len(t),'m',m,'o',o)
-print(o)
-##print(time.time()-started)
+print(v(t,1))
+print(v(t,2)) # 338-347 s
