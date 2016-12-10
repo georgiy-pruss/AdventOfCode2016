@@ -1,0 +1,1 @@
+exit#echo@((v=:4 :'b=.y i.''(''if.b=#y do.b return.end.''s r''=.".&>''x''cut(e=.{.t i.'')''){.t=.y}.~>:b if.x=1 do.d=.s else.d=.2 v s{.t}.~>:e end.b+(r*d)+x v(e+1+s)}.t')&(CRLF-.~fread'09.dat'))"0>1;2
