@@ -26,4 +26,4 @@ def step( m, ends, p, to, cnt, maxp ):
 
 def findpath( m, fm, to ): return step( m, [fm], 1, to, 0, 50+1 )
 
-print( "%d\n%d" % findpath( gen(50,50), (1,1), (31,39) ) )
+print( "%d %d" % findpath( gen(50,50), (1,1), (31,39) ) )
