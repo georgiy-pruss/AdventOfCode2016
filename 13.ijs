@@ -2,12 +2,9 @@ f=: 1358+([*[+3+2*])+]*1+]
 o=: [:-2|[:+/#:
 gen =: [:|:([:i.[)(o@f)"0 0/[:i.]
 
-directions =: 4 : 0 NB. grrrrrhhh such long function!!!
+directions =: 4 : 0
   d =. 0 2$0
-  if. 0<{:y        do. if. 0=(<0 _1+y){x do. d=.d,0 _1+y end.end.
-  if. (<:#x)>{:y   do. if. 0=(<0  1+y){x do. d=.d,0  1+y end.end.
-  if. 0<{.y        do. if. 0=(<_1 0+y){x do. d=.d,_1 0+y end.end.
-  if. (<:#{.x)>{.y do. if. 0=(<1  0+y){x do. d=.d,1  0+y end.end.
+  for_xy. (+,-)0 1,:1 0 do. if. 0=x{~<(<:$x)<.0>.y+xy do. d=.d,y+xy end. end.
   d
 )
 
