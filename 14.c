@@ -10,6 +10,8 @@
 #include <assert.h>
 #include "../_.h"
 
+E KS memmem(KS,size_t,KS,size_t); // GNU C has it, this definition is enough here
+
 #define U4 uint32_t // 4 bytes
 #define U1 uint8_t  // 1 byte
 
@@ -60,6 +62,8 @@ to_digest(U4 val, OUT U1* eightchars) __
   to_hex( (val >>  8)&0x00ffu, OUT eightchars+2 );
   to_hex( (val >> 16)&0x00ffu, OUT eightchars+4 );
   to_hex( (val >> 24)&0x00ffu, OUT eightchars+6 ); _
+
+#define MD5HSZ  32 // 32 chars in digest for 16 bytes of md5. no '\0' at the end!
 
 V
 md5( K U1* initial_msg, size_t initial_len, OUT U1* digest ) __
@@ -204,11 +208,8 @@ testmd5() __ // https://en.wikipedia.org/wiki/MD5
 
 C salt[] = "jlmsuwbz";
 
-#define HASHSZ  32 // 32 chars in digest for 16 bytes of md5. no '\0' at end!
-#define HASHSZZ 36 // with place for '\0' and to bound-4
-
-C hashes[40000][HASHSZZ]; // plain md5 hashes
-C sthshs[40000][HASHSZZ]; // stretched hashes
+C hashes[40000][MD5HSZ]; // plain md5 hashes
+C sthshs[40000][MD5HSZ]; // stretched hashes
 U nhashes = 0; // number of calculated hashes
 U nsthshs = 0; // same for stretched hashes
 
@@ -218,31 +219,31 @@ getmd5( U i ) __ // md5, possible cached, of salt + number i
   assert( i==nhashes ); // they increase continuesly
   C tmpstr[100];
   U lentmp = sprintf( tmpstr, "%s%u", salt, i );
-  md5( tmpstr, lentmp, OUT hashes[nhashes] ); hashes[nhashes][HASHSZ]='\0';
+  md5( tmpstr, lentmp, OUT hashes[nhashes] );
   R hashes[nhashes++]; _
 
 KS
 getsh( U i ) __ // md5^2017 i.e. stretched hash instead of getmd5
   if( i<nsthshs ) R sthshs[i];
   assert( i==nsthshs ); // they increase
-  C h[HASHSZZ]; memcpy( h, getmd5( i ), HASHSZ ); h[HASHSZ]='\0';
+  C h[MD5HSZ]; memcpy( h, getmd5( i ), MD5HSZ );
   for( U l=0; l<2016; ++l )
-    md5( h, HASHSZ, OUT h );
-  memcpy( sthshs[nsthshs], h, HASHSZZ );
+    md5( h, MD5HSZ, OUT h );
+  memcpy( sthshs[nsthshs], h, MD5HSZ );
   R sthshs[nsthshs++]; _
 
 KS
-hasXXX( KS s ) __ // return 5-X pattern or NULL if 3-X pattern inside s
-  O C x5[6];
-  for( U i=0; i<HASHSZ-2; ++i) __
+hasXXX( KS s ) __ // return 5-X pattern if 3-X pattern inside s, or NULL
+  O C x5[5];
+  for( U i=0; i<MD5HSZ-2; ++i) __
     if( s[i]==s[i+1] && s[i]==s[i+2] ) __
-      x5[0]=x5[1]=x5[2]=x5[3]=x5[4]=s[i]; x5[5]='\0';
+      x5[0]=x5[1]=x5[2]=x5[3]=x5[4]=s[i];
       R x5; _ _
   R NULL; _
 
 U
 findin1000( K U k, KS m, KS (*f)(U) ) __ // find  in next 1000 keys
-  for( U j=k+1; j<k+1+1000; ++j ) if( strstr( f(j), m ) ) R j;
+  for( U j=k+1; j<k+1+1000; ++j ) if( memmem( f(j), MD5HSZ, m, 5 ) ) R j;
   R 0; _
 
 U
@@ -258,10 +259,10 @@ solve( KS (*f)(U) ) __
   R k-1; _
 
 I
-main() __ // 44.7 s for Python --> 8.71 --> 6.03 s GNU C
+main() __ // 44.7 s for Python --> 8.71 --> 6.03
   if( !testmd5() ) R 1;
-  C h[HASHSZ]; md5( "abc0", 4, OUT h ); // test also sample from Day 14
-  if( memcmp( h, "577571be4de9dcce85a041ba0410f29f", HASHSZ ) !=0 ) R 1;
+  C h[MD5HSZ]; md5( "abc0", 4, OUT h ); // test also sample from Day 14
+  if( memcmp( h, "577571be4de9dcce85a041ba0410f29f", MD5HSZ )!=0 ) R 1;
   printf( "%u\n", solve(getmd5) );
   printf( "%u\n", solve(getsh) );
   R 0; _
