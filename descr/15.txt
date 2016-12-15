@@ -36,3 +36,5 @@ With this new disc, and counting again starting from time=0 with the configurati
 Your puzzle answer was 2080951.
 
 Both parts of this puzzle are complete! They provide two gold stars: **
+
+You got rank 763 on this star's leaderboard.
