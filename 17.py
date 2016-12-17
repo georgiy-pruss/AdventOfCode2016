@@ -20,17 +20,17 @@ def moves( st, path, salt ):
   if r and door_r[st]: st_path.append( (door_r[st], b'R') )
   return st_path
 
-def play( state, final, salt ):
+def play( state, final, salt, maxsteps=1000 ):
   shortest = ''
   longest = ''
   path = b''
-  b = [ [(state,path)] ] # all states at step 0
-  for k in range(10000):
+  b = [ [(state,path)] ] # b will save all states at all levels
+  for k in range(maxsteps):
     bk = b[k]
     b.append( [] )
     for state,path in bk:
       st_path = moves( state, path, salt )
-      for i,(s,p) in enumerate(st_path):
+      for s,p in st_path:
         if s==final:
           if not shortest: shortest = path+p
           longest = path+p
@@ -38,7 +38,7 @@ def play( state, final, salt ):
           b[k+1].append( (s,path+p) )
     if len(b[k+1])==0: # no more moves
       return ( shortest, len(longest) )
-  return (b'',0)
+  return (b'',0) # not finished in given number of steps
 
 #assert play( 1, 16, b'ihgpwlah' ) == ( b'DDRRRD', 370 )
 #assert play( 1, 16, b'kglvqrro' ) == ( b'DDUDRLRRUDRD', 492 )
