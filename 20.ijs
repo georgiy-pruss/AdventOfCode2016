@@ -4,7 +4,7 @@
     while. i<#y do. if. (>:u)<{.i{y do. break. end. i=.>:i [ u=.u>.{:i{y end.
     if. i>:#y do. break. end.
     if. c=0 do. echo >:u end.
-    u=.{:i{y[c=.c+>:(<:{.i{y)->:u
+    u=.{:i{y[c=.c+u-~<:{.i{y
   end.
   echo c
 )
