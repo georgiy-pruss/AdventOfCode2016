@@ -79,5 +79,5 @@ def unscramble(a,d):
 
 d = [x.split() for x in open('21.dat','rt').read().strip().split('\n')]
 print(scramble('abcdefgh',d))
-assert unscramble(scramble('abcdefgh',d),d)
+assert unscramble(scramble('abcdefgh',d),d)=='abcdefgh'
 print(unscramble('fbgdceah',d))
