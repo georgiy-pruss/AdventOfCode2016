@@ -1,17 +1,9 @@
-xlate =: 3 : 0 NB. returns (OPCODE(1-6), R1, I1, R2, I2) Ix if Rx<0
+xlate =: 3 : 0 NB. returns (OPCODE(0-7), R1, I1, R2, I2) Ix if Rx<0
   'c a b' =. 3$cut>y
   ra =. _97+a.i.a if. (0<:ra)*.ra<:3 do. o1=.ra,0 else. o1=._1,".a end.
   rb =. _97+a.i.b if. (0<:rb)*.rb<:3 do. o2=.rb,0 else. o2=._1,".b end.
-  select. c
-  case.'nop' do. 0$~5
-  case.'inc' do. 1,o1,0 0
-  case.'dec' do. 2,o1,0 0
-  case.'cpy' do. 3,o1,o2
-  case.'jnz' do. 4,o1,o2
-  case.'tgl' do. 5,o1,0 0
-  case.'add' do. 6,o1,o2
-  case.'mul' do. 7,o1,o2
-  end.
+  if. 8>i=.(<c) i.~ 0;1;2;'cpy';'jnz';5;'add';'mul' do. i,o1,o2
+  else. if. 6>i=.(<c) i.~ 0;'inc';'dec';3;4;'tgl' do. i,o1,0 0 else. 5$0 end. end.
 )
 
 inc =: 4 : '(>:({.y){x)({.y)}x'
@@ -52,7 +44,7 @@ NB. assert 3 = {. exec 5$0  NB. this is ok but remove protection <16 in tgl
 lcode =: # code =: sv =: xlate"0 cutLF CR-.~fread '23.dat'
 echo {. exec  7 0 0 0 0
 
-NB. echo (,.i.#code);(> cutLF CR-.~fread '23.dat');code1;(,.'x '{~code -:"1 1 code1);code
+NB. echo (,.i.#code);(> cutLF CR-.~fread '23.dat');sv;(,.'x '{~code -:"1 1 sv);code
 
 lcode =: # code =: sv
 echo {. exec 12 0 0 0 0
