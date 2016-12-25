@@ -11,10 +11,8 @@ dec =: 4 : '(<:({.y){x)({.y)}x'
 cpy =: 4 : 'if. 0>2{y do. x else. if. 0>{.y do. (1{y)(2{y)}x else. (({.y){x)(2{y)}x end. end.'
 
 jnz =: 4 : 0
-  if. 0>{.y do. c=.1{y else. c=.({.y){x end.
-  if. 0=c do. x return. end.
-  if. 0>2{y do. d=.{:y else. d=.(2{y){x end.
-  (<:d+{:x)_1}x
+  if. 0>{.y do. c=.1{y else. c=.({.y){x end. if. 0=c do. x return. end.
+  if. 0>2{y do. d=.{:y else. d=.(2{y){x end. (<:d+{:x)_1}x
 )
 
 tgl =: 4 : 'x' NB. no 'tgl' today
@@ -23,13 +21,12 @@ add =: 4 : '(((2{y){x)+({.y){x)(2{y)}x'
 mul =: 4 : '(((2{y){x)*({.y){x)(2{y)}x'
 
 out =: 4 : 0
-  oo =: oo, o =.({.y){x
+  o =.({.y){x
   if. output=_1 do. x [ output=:o return.end.
   if. o=output do. 0 0 0 0 99 return.end. NB. stop the program
-  if. o>1 do. 0 0 0 0 99 return.end. NB. stop the program
-  if. o<0 do. 0 0 0 0 99 return.end. NB. stop the program
+  if. (o<0)+.o>1 do. 0 0 0 0 99 return.end. NB. stop the program
   count =: >:count
-  if. count>500 do. 1 0 0 0 99 return.end. NB. catch 500 '1 0 1 0 1 0 ...'
+  if. count>500 do. 1 0 0 0 99 return.end. NB. I hope 500 (0 1 0 1...) is enough
   x [ output=:o
 )
 
@@ -41,16 +38,13 @@ exec =: 3 : 0 NB. regs --> regs
 lcode =: # code =: xlate"0 'cpy 41 a';'inc a';'inc a';'dec a';'jnz a 2';'dec a'
 assert 42 = {. exec 5$0
 
-lcode =: # code =: sv =: xlate"0 cutLF CR-.~fread '25.dat'
+lcode =: # code =: sv =: xlate"0 cutLF CR-.~fread '25.dat' NB. used 'add' in one place
 3 : 0 ''
-for_i. i.1000 do.
+for_i. i.10000 do.
   output =: _1 NB. means no output yet. should be 0 1 0 1 0 1 0 1 ...
   count =: 0
-  oo =: 0$0
   b =. {. exec  i,0 0 0 0
-  if. b do.
-    echo i
-    return.end.
+  if. b do. echo i return. end.
 end.
 )
 
