@@ -16,9 +16,6 @@ draw =: 4 : 0
   end.
 )
 
-fz =: 3 zip 5 4$ 0 0 0 3 NB. final state
-NB. final =: [:*./0 0 0 3-:"1~] NB. is final state: all elems on floor 3
-
 mv =: 4 : 0
   'c i j f g' =. y NB. c,f,g,index,j
   e =. i{x
@@ -30,14 +27,12 @@ mv =: 4 : 0
     newst =. newel j}newst
   end.
   if. newst badfloors f,g do. _1 return. end.
-  r =. g zip \:~ newst
-  r
+  g zip \:~ newst
 )
 
-solve =: 4 : 0
-  f =. x NB. start from floor x (probably 0)
-  state =. \:~ y NB. normalize initial state = sort
-  z =. f zip state NB. zipped state
+solve =: 4 : 0 NB. x - final state
+  'f s' =. y NB. start floor, start state
+  z =. f zip \:~ s NB. zipped state
   v =. ,z NB. visited is only one state initially
   w =. ,_1 NB. parent state for corresponding state in v
   b =. ,<v NB. b at k=0 has only one state
@@ -90,7 +85,7 @@ solve =: 4 : 0
       for_cijfg. moves do.
         nz =. s mv cijfg
         if. nz<0 do. continue. end.
-        if. nz=fz do. showsol k;z;v;w return. end.
+        if. nz=x do. x showsol k;z;v;w return. end.
         p =. v I. nz
         if. p<#v do. toadd =. nz~:p{v else. toadd =. 1 end.
         if. toadd do.
@@ -117,10 +112,10 @@ solve =: 4 : 0
   end.
 )
 
-showsol =: 3 : 0
+showsol =: 4 : 0 NB. x - final state
   'k z v w' =. y
   echo k
-  echo 6 unzip fz
+  echo 6 unzip x
   NB. f draw s
   whilst. z>:0 do.
     echo k=.<:k
@@ -132,9 +127,11 @@ showsol =: 3 : 0
 
 e =: 0                                                 NB. elevator
 s =: 5 4$ 3 0 0 0  0 2 1 0  0 2 1 0  0 2 1 0  0 2 1 0  NB. states of floors/elems
-NB. i-th element on all floors  i{s
-NB. i-th floor                  i{"1 s   (<(i.#s);1){s
+NB. i-th element  i{s
+NB. i-th floor    i{"1 s
 
-e solve s
+fz =: 3 zip 5 4$ 0 0 0 3 NB. final state: floor 3; all elements on floor 3
+
+fz solve e;s
 
 exit 0
