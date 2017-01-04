@@ -41,16 +41,13 @@ solve =: 4 : 0 NB. x - final state
               moves =. moves, m,i,_1,f,g
               t =. 0 4$0 0 0 0
               for_j. (i+1)+(i.(#s)-(i+1)) do.
-                if. -. (js=.j{s) e. t do.
-                  t =. t, js
-                  if. m=(fjs=.f{js) do. moves =. moves, m,i,j,f,g
-                  else. if. 3=fjs do. moves =. moves, m,i,j,f,g end.end.end.end.end.
+                if. -. (js=.j{s) e. t do. t =. t, js
+                  if. (f{js) e. 3,m do. moves =. moves, m,i,j,f,g end.end.end.end.
           else. NB. move one
             moves =. moves, c,i,_1,f,g
             t =. 0 4$0 0 0 0
             for_j. (i+1)+(i.(#s)-(i+1)) do.
-              if. -. (js=.j{s) e. t do.
-                t =. t, js
+              if. -. (js=.j{s) e. t do. t =. t, js
                 if. c=f{js do. moves =. moves, c,i,j,f,g end.end.end.end.end.end.
       for_cijfg. moves do.
         nz =. s mv cijfg
