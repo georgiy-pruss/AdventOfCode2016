@@ -43,8 +43,8 @@ solve =: 4 : 0 NB. x - final state
               for_j. (i+1)+(i.(#s)-(i+1)) do.
                 if. -. (js=.j{s) e. t do.
                   t =. t, js
-                  if. m=(fjs=.f{js) do. moves =. moves, (m, i, j, f, g)
-                  else. if. 3=fjs do. moves =. moves, (m, i, j, f, g) end.end.end.end.end.
+                  if. m=(fjs=.f{js) do. moves =. moves, m,i,j,f,g
+                  else. if. 3=fjs do. moves =. moves, m,i,j,f,g end.end.end.end.end.
           else. NB. move one
             moves =. moves, c,i,_1,f,g
             t =. 0 4$0 0 0 0
@@ -55,13 +55,13 @@ solve =: 4 : 0 NB. x - final state
       for_cijfg. moves do.
         nz =. s mv cijfg
         if. nz<0 do. continue. end.
-        if. nz=x do. x showsolution k;z;v;w;l return. end.
-        p =. v I. nz
+        if. nz=x do. x showsolution k;z;v;w;l return. end. NB. wooohooooooo!
+        p =. v I. nz NB. simulating a set (v) or even a dictionary (w[v])
         if. p<#v do. toadd =. nz~:p{v else. toadd =. 1 end.
         if. toadd do.
           if. p<#v do. w =. (p{.w),z,(p}.w) [ v =. (p{.v),nz,(p}.v)
           else. w =. w,z [ v =. v,nz end.
-          nzs =. nzs, nz end. end. end.
+          nzs =. nzs, nz end.end.end.
     if. 0 = #nzs do. echo 'no moves' return. end.
     b =. b,<nzs
     k=.>:k end.
