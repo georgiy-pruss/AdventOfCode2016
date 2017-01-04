@@ -8,7 +8,7 @@ zip =: 16#.[,kz{~4#.] NB. zip state (f zip s) to a number 0..0x4fffff[ff]
 unzip =: [:({.;4 4 4 4#:ku{~}.)(16$~[)#:] NB. unzip state to (f;s)
 
 mv =: 4 : 0
-  'c i j f g' =. y NB. c,f,g,index,j
+  'c i j f g' =. y
   newel =. (((f{e)-c),((g{e)+c)) (f,g)}e =. i{x
   newst =. newel i}x
   if. j>:0 do.
