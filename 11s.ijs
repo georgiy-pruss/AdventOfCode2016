@@ -4,13 +4,11 @@ ku=:|.,4#.(2&*+"1 1/])0 0 0 1|.~"1 0 i.4
 kz=:(i.16)ku}256#0
 Z=:16#.[,kz{~4#.]
 U=:[:({.;4 4 4 4#:ku{~}.)(16$~[)#:]
-mv=:4 :0
- n=.((((f{e)-c),(g{e)+c)(f,g)}e=.i{x)i}x['c i j f g'=.y
- if.j>:0 do.n=.((((f{e)-c),(g{e)+c)(f,g)}e=.j{x)j}n end.
- if.n B f,g do._1 else.g Z\:~n end.
-)
+m1=:3 :'0 0 0 0(_2{.y)}~_1 1*{.y'
+m2=:1 :'(m1@]+x{[)x}['
+mv=:4 :'((x(1{y)m2 y)[`((2{y)m2)@.(0<:2{])y)({:@](Z\:~)[)`(_1"_)@.B _2{.y'
 solve=:4 :0
- w=.,_1[r=.v=.,z=.f Z\:~s[l=.>:#s['f s'=.y
+ r=.v=.,z=.f Z\:~s[l=.>:#s['f s'=.y
  for_k.i.99 do.p=.0$0
   for_z.r do.ms=.0 5$0[d=.~:s['f s'=.l U z
    for_i.i.#s do.if.0=i{d do.continue.end.
@@ -27,7 +25,7 @@ solve=:4 :0
         if.(3,c)e.~f{h do.ms=.ms,c,i,j,f,g end.end.end.end.end.end.
    for_m.ms do.if.0>n=.s mv m do.continue.end.
     if.n=x do.echo>:k return.end.
-    if.-.n e.v do.v=.v,n[w=.w,z[p=.p,n end.end.end.
+    if.-.n e.v do.v=.v,n[p=.p,n end.end.end.
   if.0=#p do.echo'no moves'return.end.
   r=.p end.
 )
